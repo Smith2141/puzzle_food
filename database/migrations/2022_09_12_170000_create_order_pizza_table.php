@@ -14,11 +14,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pizzas', function (Blueprint $table) {
-            $table->comment('Пицца');
-            $table->id();
-            $table->string('name')->comment('Наименование');
-            $table->float('amount', 6, 2)->comment('Цена, шт.');
+        Schema::create('order_pizza', function (Blueprint $table) {
+            $table->comment('Связь заказа с пиццами');
+            $table->foreignId('order_id')->comment('Заказ')->constrained('orders');
+            $table->foreignId('pizza_id')->comment('Пицца')->constrained('pizzas');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pizzas');
+        Schema::dropIfExists('order_pizza');
     }
 };
