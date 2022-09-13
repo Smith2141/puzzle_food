@@ -22,6 +22,15 @@ class Pizza extends Model
     ];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'amount' => 'integer',
+    ];
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
@@ -30,4 +39,9 @@ class Pizza extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'order_pizza');
+    }
 }

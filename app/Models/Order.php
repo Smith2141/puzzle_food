@@ -32,4 +32,14 @@ class Order extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function pizzas()
+    {
+        return $this->belongsToMany(Pizza::class, 'order_pizza');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
