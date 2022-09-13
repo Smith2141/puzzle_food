@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('pizza_count')->comment('Количество, шт.');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
+            $table->primary(['order_id', 'pizza_id']);
         });
     }
 
