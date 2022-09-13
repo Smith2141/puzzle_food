@@ -6,7 +6,7 @@ use App\Models\Order;
 
 class OrderController extends Controller
 {
-    public function list()
+    public function index()
     {
         $data = Order::query()
             ->with('pizzas')

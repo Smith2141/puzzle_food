@@ -6,7 +6,7 @@ use App\Models\Pizza;
 
 class PizzaController extends Controller
 {
-    public function list()
+    public function index()
     {
         $pizzas = Pizza::all();
         return response($pizzas);

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PizzaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +16,11 @@ use App\Http\Controllers\OrderController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/user', [UserController::class, 'list']);
+Route::get('/user', [UserController::class, 'index']);
+Route::get('/pizzas', [PizzaController::class, 'index']);
 
-Route::get('/order', [OrderController::class, 'list']);
+Route::resource('/order', OrderController::class);

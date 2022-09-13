@@ -6,7 +6,7 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function list()
+    public function index()
     {
         $users = User::all();
         return response($users);
