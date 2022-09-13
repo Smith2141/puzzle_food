@@ -16,10 +16,6 @@ use App\Http\Controllers\PizzaController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Route::get('/user', [UserController::class, 'index']);
 Route::get('/pizzas', [PizzaController::class, 'index']);
 

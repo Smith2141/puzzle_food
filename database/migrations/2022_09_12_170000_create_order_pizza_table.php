@@ -18,6 +18,7 @@ return new class extends Migration
             $table->comment('Связь заказа с пиццами');
             $table->foreignId('order_id')->comment('Заказ')->constrained('orders');
             $table->foreignId('pizza_id')->comment('Пицца')->constrained('pizzas');
+            $table->integer('pizza_count')->comment('Количество, шт.');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });

@@ -16,11 +16,11 @@ class OrderPizzaSeeder extends Seeder
     {
         DB::table('order_pizza')->insert(
             [
-                ['order_id' => 1, 'pizza_id' => 1],
-                ['order_id' => 2, 'pizza_id' => 1],
-                ['order_id' => 2, 'pizza_id' => 2],
-                ['order_id' => 3, 'pizza_id' => 3],
-                ['order_id' => 3, 'pizza_id' => 3],
+                ['order_id' => 1, 'pizza_id' => 1, 'pizza_count' => 1],
+                ['order_id' => 2, 'pizza_id' => 1, 'pizza_count' => 2],
+                ['order_id' => 2, 'pizza_id' => 2, 'pizza_count' => 1],
+                ['order_id' => 3, 'pizza_id' => 3, 'pizza_count' => 3],
+                ['order_id' => 3, 'pizza_id' => 3, 'pizza_count' => 2],
             ]
         );
     }
