@@ -17,21 +17,24 @@ class OrderController extends Controller
             ->with('pizzas')
             ->get()
             ->map(function ($elem) {
-                $total_amount = $elem->pizzas->sum('amount');
-                $pizzas = $elem->pizzas->groupBy('name')
+                $pizzas = $elem->pizzas
                     ->map(function ($pizza) {
-                        $pizza_price = $pizza->first()->amount;
                         return [
-                            'count' => $pizza->count(),
-                            'position_amount' => $pizza->count() * $pizza_price
+                            'id' => $pizza->id,
+                            'name' => $pizza->name,
+                            'count' => $pizza->pivot->pizza_count,
+                            'position_amount' => $pizza->amount * $pizza->pivot->pizza_count,
                         ];
                     });
+
+                $total_amount = $pizzas->sum('position_amount');
+
                 return [
                     'user'         => $elem->user->name . ' ' . $elem->user->last_name,
                     'is_paid'      => $elem->is_paid,
                     'is_cooked'    => $elem->is_cooked,
                     'is_delivered' => $elem->is_delivered,
-                    'total'        => $total_amount,
+                    'total_amount' => $total_amount,
                     'pizzas'       => $pizzas
                 ];
             });

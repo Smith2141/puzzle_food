@@ -35,7 +35,7 @@ class Order extends Model
 
     public function pizzas()
     {
-        return $this->belongsToMany(Pizza::class, 'order_pizza');
+        return $this->belongsToMany(Pizza::class, 'order_pizza')->withPivot('pizza_count');
     }
 
     public function user()
