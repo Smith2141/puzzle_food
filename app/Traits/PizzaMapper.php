@@ -3,10 +3,11 @@
 namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as SupportCollection;
 
 trait PizzaMapper
 {
-    public function map_pizza(Collection $data): Collection
+    public function map_pizza(Collection $data): SupportCollection
     {
         $data = $data->map(function ($elem) {
             $pizzas = $elem->pizzas
@@ -22,12 +23,13 @@ trait PizzaMapper
             $total_amount = $pizzas->sum('position_amount');
 
             return [
-                'user'         => $elem->user->name . ' ' . $elem->user->last_name,
-                'is_paid'      => $elem->is_paid,
-                'is_cooked'    => $elem->is_cooked,
-                'is_delivered' => $elem->is_delivered,
-                'total_amount' => $total_amount,
-                'pizzas'       => $pizzas
+                'user_name'      => $elem->user->name,
+                'user_last_name' => $elem->user->last_name,
+                'is_paid'        => $elem->is_paid,
+                'is_cooked'      => $elem->is_cooked,
+                'is_delivered'   => $elem->is_delivered,
+                'total_amount'   => $total_amount,
+                'pizzas'         => $pizzas
             ];
         });
 
