@@ -21,4 +21,15 @@ class OrderPizza extends Model
         'pizza_id',
         'pizza_count',
     ];
+
+    // public static function createUpdatePizzaPosition($pizzas)
+    // {
+    //     $position = new self();
+    //     $position->fill([
+    //         'order_id' => 1,
+    //         'pizza_id' => $pizzas['pizza_id'],
+    //         'pizza_count' => $pizzas['pizza_count']
+    //     ]);
+    //     $position->save();
+    // }
 }

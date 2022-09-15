@@ -33,6 +33,17 @@ class Order extends Model
         'updated_at',
     ];
 
+    // /**
+    //  * The attributes that should be cast.
+    //  *
+    //  * @var array<string, string>
+    //  */
+    // protected $casts = [
+    //     'is_paid' => 'boolean',
+    //     'is_cooked' => 'boolean',
+    //     'is_delivered' => 'boolean',
+    // ];
+
     public function pizzas()
     {
         return $this->belongsToMany(Pizza::class, 'order_pizza')->withPivot('pizza_count');

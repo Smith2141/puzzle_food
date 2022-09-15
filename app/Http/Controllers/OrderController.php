@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderPizza;
 use Illuminate\Http\Request;
 use App\Traits\PizzaMapper;
+use Exception;
 
 class OrderController extends Controller
 {
@@ -37,7 +39,7 @@ class OrderController extends Controller
 
         $order = $this->map_pizza($order);
 
-        return $order;
+        return response()->json($order);
     }
 
     /**
@@ -48,6 +50,44 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (!$request->pizzas) {
+            $message = "Позиции в заказе не найдены";
+            $status = 402;
+            return response($message, $status);
+        }
+
+        $order = new Order;
+        $order->fill($request->all())->save();
+
+        foreach ($request->pizzas as $pizza) {
+            $pizza = json_decode($pizza, true);
+            $order->pizzas()->attach($pizza['pizza_id'], ['pizza_count' => $pizza['pizza_count']]);
+        }
+
+        $message = "Заказ № {$order->id} успешно создан";
+        $status = 200;
+
+        return response($message, $status);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $message = "Заказ № {$id} не найден";
+        $status = 422;
+        $order = Order::find($id) ?? null;
+
+        if ($order) {
+            $order->delete();
+            $message = "Заказ № {$id} удалён";
+            $status = 200;
+        }
+
+        return response($message, $status);
     }
 }
