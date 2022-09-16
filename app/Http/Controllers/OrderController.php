@@ -71,6 +71,36 @@ class OrderController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $data = $request->input();
+        $order = Order::find($id);
+
+        foreach ($data as $key => $value) {
+            if (!is_array($value)) {
+                $order->$key = $value;
+            }
+        }
+        $order->save();
+
+        $order->pizzas()->detach();
+        foreach ($request->pizzas as $pizza) {
+            $pizza = json_decode($pizza, true);
+            $order->pizzas()->attach($pizza['pizza_id'], ['pizza_count' => $pizza['pizza_count']]);
+        }
+
+        $message = "Заказ № {$id} обновлён";
+        $status = 200;
+        return response($message, $status);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
