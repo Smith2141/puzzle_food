@@ -24,14 +24,14 @@ trait PizzaMapper
 
             return [
                 'user_name'       => $elem->user->name,
-                'user_patronymic' => $elem->user->patronymic ?? '',
+                'user_patronymic' => $elem->user->patronymic,
                 'user_last_name'  => $elem->user->last_name,
                 'user_address'    => $elem->user->address,
                 'order_number'    => $elem->id,
                 'is_paid'         => $elem->is_paid,
                 'is_cooked'       => $elem->is_cooked,
                 'is_delivered'    => $elem->is_delivered,
-                'order_date'      =>  $elem->created_at->format('d.m.Y'),
+                'order_date'      => $elem->created_at->format('d.m.Y'),
                 'total_amount'    => $total_amount,
                 'pizzas'          => $pizzas
             ];
