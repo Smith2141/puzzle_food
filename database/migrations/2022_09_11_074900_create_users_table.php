@@ -18,9 +18,11 @@ class CreateUsersTable extends Migration
             $table->comment('Пользователи');
             $table->id();
             $table->string('name')->comment('Имя');
+            $table->string('patronymic')->comment('Отчество')->nullable();
             $table->string('last_name')->comment('Фамилия');
             $table->string('phone')->comment('Телефон');
             $table->string('email')->comment('Почта')->unique();
+            $table->string('address')->comment('Адрес доставки');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->nullable();
         });

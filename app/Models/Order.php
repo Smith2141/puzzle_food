@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
@@ -32,17 +32,6 @@ class Order extends Model
         'created_at',
         'updated_at',
     ];
-
-    // /**
-    //  * The attributes that should be cast.
-    //  *
-    //  * @var array<string, string>
-    //  */
-    // protected $casts = [
-    //     'is_paid' => 'boolean',
-    //     'is_cooked' => 'boolean',
-    //     'is_delivered' => 'boolean',
-    // ];
 
     public function pizzas()
     {

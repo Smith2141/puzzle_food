@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
-use App\Models\OrderPizza;
-use Illuminate\Http\Request;
 use App\Traits\PizzaMapper;
-use Exception;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
