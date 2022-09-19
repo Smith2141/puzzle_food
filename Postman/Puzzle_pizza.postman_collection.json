@@ -59,7 +59,8 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"const id = 1",
+							"// const id = \"1q\"",
+							"const id = 2",
 							"",
 							"pm.variables.set(\"id\", id);",
 							""
@@ -112,7 +113,9 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"const id = 9",
+							"// const id = \"1000q\"",
+							"// const id = 100",
+							"const id = 3",
 							"",
 							"pm.variables.set(\"id\", id);",
 							""
@@ -177,9 +180,10 @@
 						"exec": [
 							"const user_id = 1",
 							"",
-							"const is_paid = true",
-							"const is_cooked = true",
-							"const is_delivered = false",
+							"// const is_paid = true",
+							"const is_paid = 1",
+							"const is_cooked = 1",
+							"const is_delivered = 1",
 							"",
 							"// const pizzas = JSON.stringify([",
 							"    // {\"pizza_id\":2, \"pizza_count\":5},",
@@ -234,20 +238,24 @@
 							"type": "text"
 						},
 						{
-							"key": "pizzas[]",
-							"value": "{\"pizza_id\":2, \"pizza_count\":1}",
+							"key": "pizzas[0][pizza_id]",
+							"value": "1",
 							"type": "text"
 						},
 						{
-							"key": "pizzas[]",
-							"value": "{\"pizza_id\":3, \"pizza_count\":1}",
+							"key": "pizzas[0][pizza_count]",
+							"value": "123",
 							"type": "text"
 						},
 						{
-							"key": "pizzas",
-							"value": "{{pizzas}}",
-							"type": "text",
-							"disabled": true
+							"key": "pizzas[1][pizza_id]",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "pizzas[1][pizza_count]",
+							"value": "222",
+							"type": "text"
 						}
 					]
 				},
@@ -286,14 +294,14 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"const user_id = 1",
-							"",
-							"const is_paid = true",
-							"const is_cooked = true",
-							"const is_delivered = false",
-							"",
-							"const id = 6",
+							"const id = 17",
 							"pm.variables.set(\"id\", id);",
+							"",
+							"const user_id = 2",
+							"",
+							"const is_paid = 1",
+							"const is_cooked = 0",
+							"const is_delivered = 0",
 							"",
 							"",
 							"// const pizzas = JSON.stringify([",
@@ -349,13 +357,23 @@
 							"type": "text"
 						},
 						{
-							"key": "pizzas[]",
-							"value": "{\"pizza_id\":2, \"pizza_count\":11}",
+							"key": "pizzas[0][pizza_id]",
+							"value": "2",
 							"type": "text"
 						},
 						{
-							"key": "pizzas[]",
-							"value": "{\"pizza_id\":3, \"pizza_count\":11}",
+							"key": "pizzas[0][pizza_count]",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "pizzas[1][pizza_id]",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "pizzas[1][pizza_count]",
+							"value": "1",
 							"type": "text"
 						},
 						{
