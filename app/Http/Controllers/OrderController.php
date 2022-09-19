@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Traits\PizzaMapper;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class OrderController extends Controller
 {
@@ -33,7 +34,11 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::query()->where('id', $id)->with('pizzas')->get();
+        try {
+            $order = Order::query()->where('id', $id)->with('pizzas')->get();
+        } catch (QueryException $e) {
+            return response()->json(['message' => 'Ошибка запроса id=' . $id], 422);
+        }
 
         $order = $this->map_pizza($order);
 
@@ -108,7 +113,14 @@ class OrderController extends Controller
     {
         $message = "Заказ № {$id} не найден";
         $status = 422;
-        $order = Order::find($id) ?? null;
+
+        try {
+            $order = Order::find($id);
+        } catch (QueryException $e) {
+            $message = "Ошибка запроса id={$id}";
+            $status = 400;
+            return response()->json(['message' => $message], $status);
+        }
 
         if ($order) {
             $order->delete();
@@ -116,6 +128,6 @@ class OrderController extends Controller
             $status = 200;
         }
 
-        return response($message, $status);
+        return response()->json(['message' => $message], $status);
     }
 }
