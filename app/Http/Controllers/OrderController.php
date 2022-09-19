@@ -10,6 +10,17 @@ use Illuminate\Database\QueryException;
 class OrderController extends Controller
 {
     use PizzaMapper;
+    private $rules = [
+        'user_id'      => 'required|exists:users,id',
+        'is_paid'      => 'required|boolean',
+        'is_cooked'    => 'required|boolean',
+        'is_delivered' => 'required|boolean',
+
+        'pizzas'               => 'required|array|min:1',
+        'pizzas.*.pizza_id'    => 'required|numeric|exists:pizzas,id',
+        'pizzas.*.pizza_count' => 'required|numeric',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -53,24 +64,18 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        if (!$request->pizzas) {
-            $message = "Позиции в заказе не найдены";
-            $status = 402;
-            return response($message, $status);
-        }
+        $validated = $request->validate($this->rules);
 
         $order = new Order;
-        $order->fill($request->all())->save();
+        $order->fill($validated)->save();
 
-        foreach ($request->pizzas as $pizza) {
-            $pizza = json_decode($pizza, true);
+        foreach ($validated['pizzas'] as $pizza) {
             $order->pizzas()->attach($pizza['pizza_id'], ['pizza_count' => $pizza['pizza_count']]);
         }
 
         $message = "Заказ № {$order->id} успешно создан";
         $status = 200;
-
-        return response($message, $status);
+        return response()->json(['message' => $message], $status);
     }
 
     /**
@@ -82,10 +87,11 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->input();
+        $validated = $request->validate($this->rules);
+
         $order = Order::find($id);
 
-        foreach ($data as $key => $value) {
+        foreach ($validated as $key => $value) {
             if (!is_array($value)) {
                 $order->$key = $value;
             }
@@ -93,14 +99,13 @@ class OrderController extends Controller
         $order->save();
 
         $order->pizzas()->detach();
-        foreach ($request->pizzas as $pizza) {
-            $pizza = json_decode($pizza, true);
+        foreach ($validated['pizzas'] as $pizza) {
             $order->pizzas()->attach($pizza['pizza_id'], ['pizza_count' => $pizza['pizza_count']]);
         }
 
         $message = "Заказ № {$id} обновлён";
         $status = 200;
-        return response($message, $status);
+        return response()->json(['message' => $message], $status);
     }
 
     /**
@@ -123,6 +128,7 @@ class OrderController extends Controller
         }
 
         if ($order) {
+            $order->pizzas()->detach();
             $order->delete();
             $message = "Заказ № {$id} удалён";
             $status = 200;
